@@ -1,0 +1,9 @@
+POST {{host}}/cas/v1/tickets/TGT-39-8XyXpvhzEfpwMewKFE9gkumA2lIJgmyYckNrpKA-FYa4TUyj-yLL6DU5YeTN5BtFPq0WIN-2BMB051ESFT
+Content-Type: application/x-www-form-urlencoded
+
+service={{service}}
+
+> {%
+  tgtString =  response.body.toString();
+  client.global.set("ST",tgtString);
+%}

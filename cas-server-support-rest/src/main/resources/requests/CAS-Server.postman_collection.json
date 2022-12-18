@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "daa48b43-57cd-4222-822f-4d08e392c397",
+		"name": "CAS-Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ticket-Granting Ticket",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"action\");\r",
+							"});\r",
+							"var cheerio = require('cheerio');\r",
+							"$ = cheerio.load(pm.response.text());\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "casuser",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "Mellon",
+							"type": "default"
+						},
+						{
+							"key": "service",
+							"value": "https://www.apereo.org",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:8443/cas/v1/tickets",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"cas",
+						"v1",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Service Ticket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "service",
+							"value": "https://www.apereo.org",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:8443/cas/v1/tickets/TGT-3-E1q-qBRDYvuX-vK9-XqoBmglaOCl0pug3izYM7V9Ztg1zAMv5ODn6QJCKc7Dl3YDFncWIN-2BMB051ESFT",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"cas",
+						"v1",
+						"tickets",
+						"TGT-3-E1q-qBRDYvuX-vK9-XqoBmglaOCl0pug3izYM7V9Ztg1zAMv5ODn6QJCKc7Dl3YDFncWIN-2BMB051ESFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ticket Validation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://localhost:8443/cas/p3/serviceValidate?service=https://www.apereo.org&ticket=ST-3-LwO5bunlUlqhhVbeCpa2AkyKR1QWIN-2BMB051ESFT",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"cas",
+						"p3",
+						"serviceValidate"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "https://www.apereo.org"
+						},
+						{
+							"key": "ticket",
+							"value": "ST-3-LwO5bunlUlqhhVbeCpa2AkyKR1QWIN-2BMB051ESFT"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

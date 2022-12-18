@@ -1,0 +1,9 @@
+POST {{host}}/cas/v1/tickets/TGT-2-Bs89ry5O-lyNXJ6zMcOOnaEIaQ7MjP6c6jUCjcqHZh1i-dL1WNSbXSEyBIwi3Cw0KcAWIN-2BMB051ESFT
+Content-Type: application/x-www-form-urlencoded
+
+service={{service}}&renew=true&username={{username}}&password={{password}}
+
+> {%
+  tgtString =  response.body.toString();
+  client.global.set("ST",tgtString);
+%}
